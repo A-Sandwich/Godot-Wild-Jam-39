@@ -11,6 +11,7 @@ config_version=4
 [application]
 
 config/name="inversion"
+run/main_scene="res://Levels/Level001.tscn"
 config/icon="res://icon.png"
 
 [display]
