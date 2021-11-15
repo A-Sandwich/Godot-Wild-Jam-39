@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+signal control_velocity
+
 var speed = 400 
 var is_falling = false
 
@@ -8,6 +10,10 @@ var velocity = Vector2.ZERO
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$AnimatedSprite.play("down")
+	var enemies = get_tree().get_nodes_in_group("Enemy")
+	var position
+	for enemy in enemies:
+		self.connect("control_velocity", enemy, "_control_velocity")
 
 func _physics_process(delta):
 	process_input(delta)
@@ -37,7 +43,9 @@ func process_input(delta):
 func apply_velocity(velocity):
 	if is_falling:
 		return apply_fall()
-	return velocity.normalized() * speed
+	var result = velocity.normalized() * speed
+	emit_signal("control_velocity", result)
+	return result
 
 func apply_fall():
 	velocity = Vector2(0, 1)
