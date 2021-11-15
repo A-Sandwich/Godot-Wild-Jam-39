@@ -29,3 +29,9 @@ scale = Vector2( 0.15, 0.15 )
 position = Vector2( 90, 148 )
 scale = Vector2( 0.125, 0.125 )
 is_guarding_goal = true
+
+[node name="Enemy3" parent="." instance=ExtResource( 4 )]
+position = Vector2( 51, 164 )
+rotation = 2.35619
+scale = Vector2( 0.125, 0.125 )
+is_stationary = true

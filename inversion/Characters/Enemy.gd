@@ -10,7 +10,10 @@ var is_falling = false
 var rng = RandomNumberGenerator.new()
 var direction = Vector2.ZERO
 export var is_guarding_goal = false
+export var is_stationary = false
 var goal_coordinates
+const WIN = preload("res://HUD/Win.tscn")
+const LOSE = preload("res://HUD/Lose.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -40,13 +43,15 @@ func connect_signals_to_player():
 func _physics_process(delta):
 	if is_falling:
 		velocity = Vector2(0,1) * (speed * 2)
-	if velocity == Vector2.ZERO:
+	if velocity == Vector2.ZERO and not is_under_player_control and not is_stationary:
 		velocity = direction * speed
 	rotate_towards_direction()
 	move_and_slide(velocity)
 	velocity = Vector2.ZERO
 
 func rotate_towards_direction():
+	if is_stationary:
+		return
 	$FieldOfView.rotation = direction.angle() + -90
 
 func _control_velocity(velocity):
@@ -54,7 +59,12 @@ func _control_velocity(velocity):
 		self.velocity = velocity * -1
 
 func _on_FieldOfView_area_entered(area):
+	if is_under_player_control:
+		return
 	if (area.get_parent().name == "Player"):
+		var lose = LOSE.instance()
+		add_child(lose)
+		get_tree().paused = true
 		emit_signal("player_in_fov")
 
 func _on_FieldOfView_area_exited(area):
@@ -65,10 +75,16 @@ func _control_enemy(enemy):
 	if self != enemy:
 		return
 	
+	$FieldOfView.visible = false
 	is_under_player_control = true
 	$Camera2D.current = true
 
 func _in_goal(area):
+	if is_under_player_control and area.get_parent() == self:
+		var win = WIN.instance()
+		add_child(win)
+		get_tree().paused = true
+		
 	print("Enemy in goooooal", area.name)
 
 func pick_random_direction():
