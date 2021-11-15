@@ -46,12 +46,39 @@ func _physics_process(delta):
 	if velocity == Vector2.ZERO and not is_under_player_control and not is_stationary:
 		velocity = direction * speed
 	rotate_towards_direction()
+	choose_proper_animation()
 	move_and_slide(velocity)
 	velocity = Vector2.ZERO
+
+func choose_proper_animation():
+	# This code is bad and I feel bad
+	var angle = rad2deg(direction.angle()) -90
+	if angle < 0:
+		angle = 360 + angle
+	print(angle, name)
+	
+	if  ((0 < angle and angle < 45) or (315 < angle and angle < 360)) and $AnimatedSprite.animation != "down":
+		$AnimatedSprite.play("down")
+		return
+	if (135 < angle and angle < 225) and $AnimatedSprite.animation != "up":
+		$AnimatedSprite.play("up")
+		return
+
+	if (225 < angle and angle < 315):
+		if $AnimatedSprite.animation != "right":
+			$AnimatedSprite.play("right")
+		$AnimatedSprite.flip_h = false
+		return
+	if (45 < angle and angle < 135):
+		if $AnimatedSprite.animation != "right":
+			$AnimatedSprite.play("right")
+		$AnimatedSprite.flip_h = true
+		return
 
 func rotate_towards_direction():
 	if is_stationary:
 		return
+	
 	$FieldOfView.rotation = direction.angle() + -90
 
 func _control_velocity(velocity):
@@ -99,7 +126,8 @@ func _on_FallDetection_body_exited(body):
 
 
 func _on_DirectionChange_timeout():
-	print("New direction")
+	if is_stationary:
+		return #love all these conditionals in all of my signals me too
 	if is_guarding_goal:
 		if is_guarding_goal:
 			direction = self.global_position.direction_to(goal_coordinates)
