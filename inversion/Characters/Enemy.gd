@@ -3,13 +3,19 @@ extends KinematicBody2D
 signal player_in_fov
 signal player_out_of_fov
 
+var speed = 100 
 var velocity = Vector2.ZERO
 var is_under_player_control = false
+var is_falling = false
+var rng = RandomNumberGenerator.new()
+var direction = Vector2.ZERO
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	connect_signals_to_player()
 	connect_to_goal()
+	rng.randomize()
+	direction = pick_random_direction()
 
 func connect_to_goal():
 	var goal = get_tree().get_nodes_in_group("Goal")
@@ -27,6 +33,10 @@ func connect_signals_to_player():
 	self.connect("player_out_of_fov", player[0], "_player_out_of_fov")
 
 func _physics_process(delta):
+	if is_falling:
+		velocity = Vector2(0,1) * (speed * 2)
+	if velocity == Vector2.ZERO:
+		velocity = direction * speed
 	move_and_slide(velocity)
 	velocity = Vector2.ZERO
 
@@ -51,3 +61,18 @@ func _control_enemy(enemy):
 
 func _in_goal(area):
 	print("Enemy in goooooal", area.name)
+
+func pick_random_direction():
+	return Vector2(rng.randf_range(-1.0, 1.0), rng.randf_range(-1.0, 1.0)).normalized()
+
+func _on_FallDetection_body_exited(body):
+	if is_under_player_control:
+		is_falling = true
+		z_index = -1
+	else:
+		direction = direction * -1
+
+
+func _on_DirectionChange_timeout():
+	print("New direction")
+	direction = pick_random_direction()

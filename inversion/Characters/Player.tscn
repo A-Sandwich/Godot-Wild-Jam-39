@@ -1,10 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Resources/Sprites/Player/player-up-static.png" type="Texture" id=1]
 [ext_resource path="res://Resources/Sprites/Player/player-right-static.png" type="Texture" id=2]
 [ext_resource path="res://Resources/Sprites/Player/player-down-static.png" type="Texture" id=3]
 [ext_resource path="res://Characters/Player.gd" type="Script" id=4]
-[ext_resource path="res://Characters/FallDetection.gd" type="Script" id=5]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -46,7 +45,6 @@ current = true
 zoom = Vector2( 0.5, 0.5 )
 
 [node name="FallDetection" type="Area2D" parent="."]
-script = ExtResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FallDetection"]
 shape = SubResource( 2 )
