@@ -9,6 +9,8 @@ var is_under_player_control = false
 var is_falling = false
 var rng = RandomNumberGenerator.new()
 var direction = Vector2.ZERO
+export var is_guarding_goal = false
+var goal_coordinates
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -17,13 +19,16 @@ func _ready():
 	rng.randomize()
 	direction = pick_random_direction()
 
+
 func connect_to_goal():
 	var goal = get_tree().get_nodes_in_group("Goal")
 	if len(goal) < 1:
 		print("Failed to connect to goal")
 		return
 	goal[0].connect("in_goal", self, "_in_goal")
-	
+	if is_guarding_goal:
+		goal_coordinates = goal[0].global_position
+
 func connect_signals_to_player():
 	var player = get_tree().get_nodes_in_group("Player")
 	if len(player) < 1:
@@ -37,8 +42,12 @@ func _physics_process(delta):
 		velocity = Vector2(0,1) * (speed * 2)
 	if velocity == Vector2.ZERO:
 		velocity = direction * speed
+	rotate_towards_direction()
 	move_and_slide(velocity)
 	velocity = Vector2.ZERO
+
+func rotate_towards_direction():
+	$FieldOfView.rotation = direction.angle() + -90
 
 func _control_velocity(velocity):
 	if is_under_player_control:
@@ -75,4 +84,8 @@ func _on_FallDetection_body_exited(body):
 
 func _on_DirectionChange_timeout():
 	print("New direction")
+	if is_guarding_goal:
+		if is_guarding_goal:
+			direction = self.global_position.direction_to(goal_coordinates)
+			return
 	direction = pick_random_direction()

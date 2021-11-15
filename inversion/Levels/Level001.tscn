@@ -24,3 +24,8 @@ scale = Vector2( 0.125, 0.125 )
 [node name="Goal" parent="." instance=ExtResource( 5 )]
 position = Vector2( 150, 203 )
 scale = Vector2( 0.15, 0.15 )
+
+[node name="Enemy2" parent="." instance=ExtResource( 4 )]
+position = Vector2( 90, 148 )
+scale = Vector2( 0.125, 0.125 )
+is_guarding_goal = true

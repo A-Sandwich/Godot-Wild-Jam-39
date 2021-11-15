@@ -48,7 +48,6 @@ animation = "down"
 playing = true
 
 [node name="FieldOfView" type="Area2D" parent="."]
-visible = false
 modulate = Color( 1, 0, 0, 1 )
 self_modulate = Color( 1, 0, 0, 1 )
 show_behind_parent = true
@@ -61,7 +60,7 @@ show_behind_parent = true
 z_index = 10
 polygon = PoolVector2Array( -52, 12, -282, 133, -256, 205, -177, 254, -70, 279, 6, 289, 109, 279, 206, 242, 262, 196, 290, 135, 51, 3 )
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Sprite" type="Sprite" parent="FieldOfView"]
 show_behind_parent = true
 position = Vector2( 2.50001, 133 )
 scale = Vector2( 2.25391, 1.23438 )
