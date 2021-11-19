@@ -1,0 +1,89 @@
+{
+	"events": [
+		{
+			"action": "join",
+			"character": "character-1637353698.json",
+			"event_id": "dialogic_002",
+			"mirror": false,
+			"portrait": "",
+			"position": {
+				"0": false,
+				"1": false,
+				"2": false,
+				"3": false,
+				"4": true
+			}
+		},
+		{
+			"character": "character-1637353698.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "So you've finally come here to hone your psychic ability, huh?"
+		},
+		{
+			"action": "join",
+			"character": "character-1637353607.json",
+			"event_id": "dialogic_002",
+			"mirror": false,
+			"portrait": "",
+			"position": {
+				"0": true,
+				"1": false,
+				"2": false,
+				"3": false,
+				"4": false
+			}
+		},
+		{
+			"character": "character-1637353607.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "Yeah! I noticed that if I sneak up behind people and visualize pressing the letter \"e\" on a keyboard, I kind of jump into their body."
+		},
+		{
+			"character": "character-1637353698.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "Ah yes, I remember the first time I \"pressed e\". Those were the days...."
+		},
+		{
+			"character": "character-1637353607.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "..."
+		},
+		{
+			"character": "character-1637353607.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "... . . ."
+		},
+		{
+			"character": "character-1637353607.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "Hellooooo"
+		},
+		{
+			"character": "character-1637353698.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "Oh yes, sorry. It sounds like you already know everything you need to know. It's not like you need me to tell you that you can move with \"W A S D\".... "
+		},
+		{
+			"character": "character-1637353698.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "How about you show me your skills! Sneak up behind me and move me to the goal!"
+		},
+		{
+			"emit_signal": "Intro",
+			"event_id": "dialogic_040"
+		}
+	],
+	"metadata": {
+		"dialogic-version": "1.3",
+		"file": "timeline-1637353737.json",
+		"name": "Intro"
+	}
+}

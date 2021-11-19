@@ -1,0 +1,29 @@
+{
+	"events": [
+		{
+			"action": "join",
+			"character": "character-1637353698.json",
+			"event_id": "dialogic_002",
+			"mirror": false,
+			"portrait": "",
+			"position": {
+				"0": false,
+				"1": false,
+				"2": false,
+				"3": false,
+				"4": true
+			}
+		},
+		{
+			"character": "character-1637353698.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "HEY! I See you! Mind control only works if I don't see you! If you can control my mind you probably can see my vision cone too..."
+		}
+	],
+	"metadata": {
+		"dialogic-version": "1.3",
+		"file": "timeline-1637357584.json",
+		"name": "I SEE YOU"
+	}
+}

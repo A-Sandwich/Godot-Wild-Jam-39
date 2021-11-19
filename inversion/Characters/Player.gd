@@ -2,11 +2,12 @@ extends KinematicBody2D
 
 signal control_velocity
 signal control_enemy
+signal control_old_man
 
 var is_seen = false
 var speed = 400 
 var is_falling = false
-var is_controlling_enemy = false
+var is_using_mind_control = false
 
 var velocity = Vector2.ZERO
 
@@ -14,13 +15,20 @@ var velocity = Vector2.ZERO
 func _ready():
 	$AnimatedSprite.play("down")
 	connect_signals_to_enemies()
+	connect_signals_to_old_men()
 	self.connect("control_enemy", self, "_control_enemy")
+	self.connect("control_old_man", self, "_control_old_man")
 	
 func connect_signals_to_enemies():
 	var enemies = get_tree().get_nodes_in_group("Enemy")
 	for enemy in enemies:
 		self.connect("control_velocity", enemy, "_control_velocity")
 		self.connect("control_enemy", enemy, "_control_enemy")
+
+func connect_signals_to_old_men():
+	var old_men = get_tree().get_nodes_in_group("Old")
+	for old_man in old_men:
+		self.connect("control_old_man", old_man, "_control_old_man")
 
 func _physics_process(delta):
 	process_input()
@@ -29,28 +37,43 @@ func _physics_process(delta):
 func process_input():
 	velocity = Vector2.ZERO
 	if Input.is_action_pressed("ui_up"):
-		$AnimatedSprite.play("up")
+		if not is_using_mind_control: $AnimatedSprite.play("up")
 		velocity.y -= 1
 	if Input.is_action_pressed("ui_down"):
-		$AnimatedSprite.play("down")
+		if not is_using_mind_control: $AnimatedSprite.play("down")
 		velocity.y += 1
 	if Input.is_action_pressed("ui_left"):
-		$AnimatedSprite.play("right")
-		if not $AnimatedSprite.flip_h:
+		if not is_using_mind_control: $AnimatedSprite.play("right")
+		if  not is_using_mind_control and not $AnimatedSprite.flip_h:
 			$AnimatedSprite.flip_h = true
 		velocity.x -= 1
 	if Input.is_action_pressed("ui_right"):
-		$AnimatedSprite.play("right")
-		if $AnimatedSprite.flip_h:
+		if not is_using_mind_control: $AnimatedSprite.play("right")
+		if not is_using_mind_control and $AnimatedSprite.flip_h:
 			$AnimatedSprite.flip_h = false
 		velocity.x += 1
 	if Input.is_action_just_pressed("ui_select") and not is_seen:
-		var enemies = get_tree().get_nodes_in_group("Enemy")
-		for enemy in enemies:
-			print(global_position.distance_to(enemy.global_position))
-			if global_position.distance_to(enemy.global_position) < 75:
-				emit_signal("control_enemy", enemy)
+		var enemy_found = select_enemy()
+		if not enemy_found:
+			select_old_man()
 	velocity = apply_velocity(velocity)
+
+func select_old_man():
+	var old_man = get_tree().get_nodes_in_group("Old")
+	if len(old_man) < 1:
+		print("Can't find the old man")
+		return
+	if global_position.distance_to(old_man[0].global_position) < 50:
+		emit_signal("control_old_man", old_man[0])
+
+func select_enemy():
+	var enemy_found = false
+	var enemies = get_tree().get_nodes_in_group("Enemy")
+	for enemy in enemies:
+		if global_position.distance_to(enemy.global_position) < 50:
+			emit_signal("control_enemy", enemy)
+			enemy_found = true
+	return enemy_found
 
 func apply_velocity(velocity):
 	if is_falling:
@@ -59,7 +82,7 @@ func apply_velocity(velocity):
 	var result = velocity.normalized() * speed
 	emit_signal("control_velocity", result)
 	
-	if is_controlling_enemy:
+	if is_using_mind_control:
 		return Vector2.ZERO
 	return result
 
@@ -84,4 +107,22 @@ func _player_out_of_fov():
 	print("I am hidden!")
 
 func _control_enemy(enemy):
-	is_controlling_enemy = true
+	is_using_mind_control = true
+
+func _control_old_man(old_man):
+	is_using_mind_control = true
+
+func _enemy_died():
+	$Camera2D.current = true
+	is_using_mind_control = false
+
+func pan_to_goal():
+	print("Pan")
+	# todo implement pan
+
+func get_goal_location():
+	var goal = get_tree().get_nodes_in_group("Goal")
+	if len(goal) < 1:
+		print("Failed to connect to goal")
+		return global_position
+	return goal[0].global_position

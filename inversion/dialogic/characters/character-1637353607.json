@@ -1,0 +1,24 @@
+{
+	"color": "#ffac3232",
+	"description": "You! The player!",
+	"display_name": "...",
+	"display_name_bool": true,
+	"id": "character-1637353607.json",
+	"mirror_portraits": false,
+	"name": "Player",
+	"nickname": "",
+	"nickname_bool": false,
+	"offset_x": -105,
+	"offset_y": 0,
+	"portraits": [
+		{
+			"name": "Default",
+			"path": "res://Resources/Sprites/Player/player-down-static.png"
+		},
+		{
+			"name": "player-down-static",
+			"path": "res://Resources/Sprites/Player/player-down-static.png"
+		}
+	],
+	"scale": 100
+}

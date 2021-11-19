@@ -52,7 +52,7 @@ _global_script_class_icons={
 
 config/name="inversion"
 run/main_scene="res://Levels/Level001.tscn"
-config/icon="res://icon.png"
+config/icon="res://Resources/Sprites/Player/player-down-static.png"
 
 [display]
 

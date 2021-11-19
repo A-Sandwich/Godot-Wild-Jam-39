@@ -2,6 +2,11 @@ extends KinematicBody2D
 
 signal player_in_fov
 signal player_out_of_fov
+signal enemy_died
+
+export var is_guarding_goal = false
+export var is_stationary = false
+export var is_old_man = false
 
 var speed = 100 
 var velocity = Vector2.ZERO
@@ -9,8 +14,6 @@ var is_under_player_control = false
 var is_falling = false
 var rng = RandomNumberGenerator.new()
 var direction = Vector2.ZERO
-export var is_guarding_goal = false
-export var is_stationary = false
 var goal_coordinates
 const WIN = preload("res://HUD/Win.tscn")
 const LOSE = preload("res://HUD/Lose.tscn")
@@ -39,10 +42,11 @@ func connect_signals_to_player():
 		return
 	self.connect("player_in_fov", player[0], "_player_in_fov")
 	self.connect("player_out_of_fov", player[0], "_player_out_of_fov")
+	self.connect("enemy_died", player[0], "_enemy_died")
 
 func _physics_process(delta):
 	if is_falling:
-		velocity = Vector2(0,1) * (speed * 2)
+		velocity = Vector2(0,1) * (speed * 6)
 	if velocity == Vector2.ZERO and not is_under_player_control and not is_stationary:
 		velocity = direction * speed
 	rotate_towards_direction()
@@ -55,7 +59,6 @@ func choose_proper_animation():
 	var angle = rad2deg(direction.angle()) -90
 	if angle < 0:
 		angle = 360 + angle
-	print(angle, name)
 	
 	if  ((0 < angle and angle < 45) or (315 < angle and angle < 360)) and $AnimatedSprite.animation != "down":
 		$AnimatedSprite.play("down")
@@ -107,7 +110,10 @@ func _control_enemy(enemy):
 	$Camera2D.current = true
 
 func _in_goal(area):
-	if is_under_player_control and area.get_parent() == self:
+	if (not is_falling and
+		is_under_player_control and 
+		area.name != "FieldOfView" and
+		area.get_parent() == self):
 		var win = WIN.instance()
 		add_child(win)
 		get_tree().paused = true
@@ -121,6 +127,8 @@ func _on_FallDetection_body_exited(body):
 	if is_under_player_control:
 		is_falling = true
 		z_index = -1
+		$FallTimer.start()
+		emit_signal("enemy_died")
 	else:
 		direction = direction * -1
 
@@ -133,3 +141,7 @@ func _on_DirectionChange_timeout():
 			direction = self.global_position.direction_to(goal_coordinates)
 			return
 	direction = pick_random_direction()
+
+
+func _on_FallTimer_timeout():
+	queue_free()

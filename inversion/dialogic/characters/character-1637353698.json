@@ -1,0 +1,20 @@
+{
+	"color": "#ff5fcde4",
+	"description": "Wise Old Man",
+	"display_name": "Old Man",
+	"display_name_bool": true,
+	"id": "character-1637353698.json",
+	"mirror_portraits": false,
+	"name": "WiseOldMan",
+	"nickname": "",
+	"nickname_bool": false,
+	"offset_x": 105,
+	"offset_y": 0,
+	"portraits": [
+		{
+			"name": "Default",
+			"path": "res://Resources/Sprites/old-man-static.png"
+		}
+	],
+	"scale": 100
+}
