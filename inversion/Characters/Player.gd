@@ -120,7 +120,6 @@ func _enemy_died():
 	is_using_mind_control = false
 
 func pan_to_goal():
-	print("Pan")
 	is_panning = true
 	$Camera2D.pan_to_point(get_goal_location())
 

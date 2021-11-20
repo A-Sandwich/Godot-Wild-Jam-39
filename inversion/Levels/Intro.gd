@@ -8,7 +8,6 @@ func _ready():
 	new_dialog.connect('dialogic_signal', self, 'pan_to_goal')
 	
 func after_dialog(timeline_name):
-	print(timeline_name)
 	get_tree().paused = false
 
 func _select_dialog(dialog_name):
@@ -18,5 +17,4 @@ func _select_dialog(dialog_name):
 	new_dialog.connect('timeline_end', self, 'after_dialog')
 
 func pan_to_goal(name):
-	print("IN")
 	$Player.pan_to_goal()

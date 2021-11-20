@@ -19,8 +19,6 @@ func _process(delta):
 		$PanPause.start()
 
 func pan_to_point(point):
-	print(point, is_panning)
-	
 	if not is_panning:
 		target = point
 		is_panning = true

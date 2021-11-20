@@ -75,5 +75,9 @@ shape = SubResource( 6 )
 [node name="Explain" type="Timer" parent="."]
 wait_time = 2.0
 
+[node name="FallTimer" type="Timer" parent="."]
+
 [connection signal="area_entered" from="FieldOfView" to="." method="_on_FieldOfView_area_entered"]
+[connection signal="body_exited" from="FallDetection" to="." method="_on_FallDetection_body_exited"]
 [connection signal="timeout" from="Explain" to="." method="_on_Explain_timeout"]
+[connection signal="timeout" from="FallTimer" to="." method="_on_FallTimer_timeout"]

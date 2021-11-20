@@ -47,22 +47,16 @@ func process_input():
 		if $AnimatedSprite.flip_h:
 			$AnimatedSprite.flip_h = false
 		velocity.x += 1
-	velocity = apply_velocity(velocity)
+	if is_falling:
+		velocity = Vector2(0,1) * (speed * 6)
+		move_and_slide(velocity)
+	else:
+		velocity = apply_velocity(velocity)
 
 func apply_velocity(velocity):
-	if is_falling:
-		return apply_fall()
-		
 	var result = velocity.normalized() * speed
 	move_and_slide(result * -1)
 	return result
-
-func apply_fall():
-	velocity = Vector2(0, 1)
-	velocity = velocity.normalized() * (speed * 2)
-	self.z_index = -1
-	$Camera2D.current = false
-	return velocity
 
 func _on_FieldOfView_area_entered(area):
 	if not is_under_player_control and area.get_parent().name == "Player":
@@ -93,4 +87,16 @@ func _in_goal(area):
 func _on_Explain_timeout():
 	emit_signal("select_dialog" ,"Inversion Detected")
 	$Explain.stop()
-	
+
+func _on_FallDetection_body_exited(body):
+	if is_under_player_control:
+		is_falling = true
+		z_index = -1
+		$FallTimer.start()
+		emit_signal("enemy_died")
+		$Camera2D.current = false
+
+
+func _on_FallTimer_timeout():
+	get_parent().add_child(LOSE.instance())
+	queue_free()
