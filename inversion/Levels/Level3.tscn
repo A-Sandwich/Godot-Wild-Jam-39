@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Levels/MyGrassWorld.tres" type="TileSet" id=1]
+[ext_resource path="res://Levels/Level3.gd" type="Script" id=2]
+[ext_resource path="res://Characters/OldMan.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Characters/Player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Levels/Components/Goal.tscn" type="PackedScene" id=6]
+
+[node name="Level3" type="Node2D"]
+pause_mode = 2
+script = ExtResource( 2 )
+
+[node name="TileMap" type="TileMap" parent="." groups=["Grass"]]
+tile_set = ExtResource( 1 )
+format = 1
+tile_data = PoolIntArray( 458756, 0, 8, 458757, 0, 10, 458758, 0, 10, 458759, 0, 10, 458760, 0, 11, 524292, 0, 65544, 524293, 0, 131081, 524294, 0, 131081, 524295, 0, 131081, 524296, 0, 131083, 589828, 0, 65544, 589829, 0, 131081, 589830, 0, 131081, 589831, 0, 131081, 589832, 0, 131083, 655364, 0, 196616, 655365, 0, 196617, 655366, 0, 196617, 655367, 0, 196617, 655368, 0, 196619 )
+
+[node name="Player" parent="." instance=ExtResource( 4 )]
+pause_mode = 1
+position = Vector2( 361, 606 )
+scale = Vector2( 0.125, 0.125 )
+
+[node name="OldMan" parent="." instance=ExtResource( 3 )]
+pause_mode = 1
+position = Vector2( 457, 602 )
+scale = Vector2( 0.125, 0.125 )
+
+[node name="Goal" parent="." instance=ExtResource( 6 )]
+position = Vector2( 413, 569 )
+scale = Vector2( 0.1, 0.1 )
+z_index = -100
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -100
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+margin_left = -2908.0
+margin_top = -1669.0
+margin_right = 4439.0
+margin_bottom = 1754.0
+color = Color( 0.34902, 0.898039, 1, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

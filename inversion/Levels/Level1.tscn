@@ -39,3 +39,16 @@ position = Vector2( 51, 164 )
 rotation = 2.35619
 scale = Vector2( 0.125, 0.125 )
 is_stationary = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -100
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+margin_left = -2908.0
+margin_top = -1669.0
+margin_right = 4439.0
+margin_bottom = 1754.0
+color = Color( 0.34902, 0.898039, 1, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
