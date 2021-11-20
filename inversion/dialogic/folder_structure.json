@@ -59,7 +59,7 @@
 					},
 					"metadata": {
 						"color": null,
-						"folded": true
+						"folded": false
 					}
 				},
 				"Level1": {
@@ -71,7 +71,19 @@
 					},
 					"metadata": {
 						"color": null,
-						"folded": false
+						"folded": true
+					}
+				},
+				"Level2": {
+					"files": [
+						"timeline-1637434196.json"
+					],
+					"folders": {
+
+					},
+					"metadata": {
+						"color": null,
+						"folded": true
 					}
 				}
 			},

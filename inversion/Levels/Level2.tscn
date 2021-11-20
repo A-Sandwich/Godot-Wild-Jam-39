@@ -1,0 +1,62 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Levels/MyGrassWorld.tres" type="TileSet" id=1]
+[ext_resource path="res://Characters/OldMan.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Characters/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Levels/Components/Goal.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Characters/Enemy.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Levels/Level2.gd" type="Script" id=6]
+
+[node name="Level2" type="Node2D"]
+pause_mode = 2
+script = ExtResource( 6 )
+
+[node name="TileMap" type="TileMap" parent="." groups=["Grass"]]
+tile_set = ExtResource( 1 )
+format = 1
+tile_data = PoolIntArray( -65537, 0, 8, -131072, 0, 10, -131071, 0, 11, -1, 0, 65544, -65536, 0, 131081, -65535, 0, 131083, 65535, 0, 196616, 0, 0, 196618, 1, 0, 196619, 65536, 0, 65536, 131072, 0, 65536, 131077, 0, 8, 131078, 0, 10, 131079, 0, 10, 131080, 0, 10, 131081, 0, 10, 131082, 0, 10, 131083, 0, 11, 131085, 0, 8, 131086, 0, 11, 262141, 0, 8, 262142, 0, 10, 262143, 0, 10, 196608, 0, 9, 196609, 0, 10, 196610, 0, 10, 196611, 0, 11, 196613, 0, 65544, 196614, 0, 131081, 196615, 0, 131081, 196616, 0, 131081, 196617, 0, 131081, 196618, 0, 131081, 196619, 0, 65547, 196620, 0, 196610, 196621, 0, 131080, 196622, 0, 131083, 327677, 0, 196616, 327678, 0, 131077, 327679, 0, 131078, 262144, 0, 196617, 262145, 0, 131077, 262146, 0, 131078, 262147, 0, 196619, 262149, 0, 196616, 262150, 0, 196618, 262151, 0, 196617, 262152, 0, 196617, 262153, 0, 196617, 262154, 0, 196617, 262155, 0, 196619, 262157, 0, 65544, 262158, 0, 131083, 393214, 0, 65544, 393215, 0, 131083, 327681, 0, 65544, 327682, 0, 131083, 327686, 0, 65536, 327693, 0, 65544, 327694, 0, 131083, 458750, 0, 65544, 458751, 0, 131083, 393217, 0, 65544, 393218, 0, 131083, 393222, 0, 65536, 393229, 0, 65544, 393230, 0, 131083, 524286, 0, 65544, 524287, 0, 131083, 458753, 0, 65544, 458754, 0, 131083, 458758, 0, 65536, 458761, 0, 8, 458762, 0, 10, 458763, 0, 11, 458765, 0, 65544, 458766, 0, 131083, 589822, 0, 65544, 589823, 0, 131083, 524289, 0, 65544, 524290, 0, 65542, 524291, 0, 10, 524292, 0, 10, 524293, 0, 10, 524294, 0, 9, 524295, 0, 11, 524297, 0, 65544, 524298, 0, 131081, 524299, 0, 65547, 524300, 0, 196610, 524301, 0, 131080, 524302, 0, 131083, 655358, 0, 196616, 655359, 0, 196614, 589824, 0, 196610, 589825, 0, 196613, 589826, 0, 196617, 589827, 0, 196617, 589828, 0, 196617, 589829, 0, 196617, 589830, 0, 196618, 589831, 0, 196619, 589833, 0, 196616, 589834, 0, 196617, 589835, 0, 196619, 589837, 0, 65544, 589838, 0, 131083, 655366, 0, 65536, 655373, 0, 65544, 655374, 0, 131083, 720902, 0, 65536, 720909, 0, 65544, 720910, 0, 131083, 786437, 0, 8, 786438, 0, 9, 786439, 0, 10, 786440, 0, 10, 786441, 0, 10, 786442, 0, 11, 786445, 0, 65544, 786446, 0, 131083, 851973, 0, 65544, 851974, 0, 131081, 851975, 0, 131081, 851976, 0, 131081, 851977, 0, 131081, 851978, 0, 65547, 851979, 0, 196610, 851980, 0, 196610, 851981, 0, 131080, 851982, 0, 131083, 917509, 0, 196616, 917510, 0, 196617, 917511, 0, 196617, 917512, 0, 196617, 917513, 0, 196617, 917514, 0, 196619, 917517, 0, 196616, 917518, 0, 196619 )
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+pause_mode = 1
+scale = Vector2( 0.125, 0.125 )
+
+[node name="OldMan" parent="." instance=ExtResource( 2 )]
+pause_mode = 1
+position = Vector2( 99, -37 )
+scale = Vector2( 0.125, 0.125 )
+
+[node name="Goal" parent="." instance=ExtResource( 4 )]
+position = Vector2( 670, 534 )
+scale = Vector2( 0.5, 0.5 )
+
+[node name="Enemies" type="Node2D" parent="."]
+pause_mode = 1
+position = Vector2( 119, 37 )
+
+[node name="Enemy" parent="Enemies" instance=ExtResource( 5 )]
+position = Vector2( 378, 160 )
+scale = Vector2( 0.125, 0.125 )
+
+[node name="Enemy2" parent="Enemies" instance=ExtResource( 5 )]
+position = Vector2( 595, 606 )
+scale = Vector2( 0.125, 0.125 )
+
+[node name="Enemy3" parent="Enemies" instance=ExtResource( 5 )]
+position = Vector2( 631, 806 )
+scale = Vector2( 0.125, 0.125 )
+
+[node name="Enemy4" parent="Enemies" instance=ExtResource( 5 )]
+position = Vector2( -69, 563 )
+scale = Vector2( 0.125, 0.125 )
+
+[node name="Enemy5" parent="Enemies" instance=ExtResource( 5 )]
+position = Vector2( 132, 235 )
+scale = Vector2( 0.125, 0.125 )
+
+[node name="Enemy6" parent="Enemies" instance=ExtResource( 5 )]
+position = Vector2( 420, 542 )
+scale = Vector2( 0.125, 0.125 )
+
+[node name="Enemy7" parent="Enemies" instance=ExtResource( 5 )]
+position = Vector2( 849, 195 )
+scale = Vector2( 0.125, 0.125 )

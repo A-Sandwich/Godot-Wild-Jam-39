@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Levels/MyGrassWorld.tres" type="TileSet" id=1]
+[ext_resource path="res://Characters/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Characters/OldMan.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Levels/Intro.gd" type="Script" id=4]
 [ext_resource path="res://Levels/Components/Goal.tscn" type="PackedScene" id=5]
@@ -22,3 +23,7 @@ scale = Vector2( 0.125, 0.125 )
 [node name="Goal" parent="." instance=ExtResource( 5 )]
 position = Vector2( 508, 778 )
 scale = Vector2( 0.25, 0.25 )
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 181, 283 )
+scale = Vector2( 0.125, 0.125 )

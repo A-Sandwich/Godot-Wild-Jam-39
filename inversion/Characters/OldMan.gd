@@ -6,6 +6,7 @@ signal select_dialog
 const WIN = preload("res://HUD/Win.tscn")
 const LOSE = preload("res://HUD/Lose.tscn")
 
+var is_seen = false
 var is_under_player_control = false
 var velocity = Vector2.ZERO
 var is_falling = false
@@ -30,6 +31,8 @@ func _physics_process(delta):
 		process_input()
 
 func process_input():
+	if is_seen:
+		return
 	velocity = Vector2.ZERO
 	if Input.is_action_pressed("ui_up"):
 		$AnimatedSprite.play("up")
@@ -102,3 +105,7 @@ func _on_FallTimer_timeout():
 	lose.lablel_text = "You killed the old man . . . try again?"
 	get_parent().add_child(lose)
 	queue_free()
+
+func _person_in_fov():
+	is_seen = true
+	print("I'm seen!")

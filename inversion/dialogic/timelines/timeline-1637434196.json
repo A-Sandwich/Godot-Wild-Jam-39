@@ -1,0 +1,55 @@
+{
+	"events": [
+		{
+			"action": "join",
+			"character": "character-1637353698.json",
+			"event_id": "dialogic_002",
+			"mirror": false,
+			"portrait": "",
+			"position": {
+				"0": false,
+				"1": false,
+				"2": false,
+				"3": false,
+				"4": true
+			}
+		},
+		{
+			"character": "character-1637353698.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "Wow, you've made it all the way to the last level! Great job!"
+		},
+		{
+			"action": "join",
+			"character": "character-1637353607.json",
+			"event_id": "dialogic_002",
+			"mirror": false,
+			"portrait": "",
+			"position": {
+				"0": true,
+				"1": false,
+				"2": false,
+				"3": false,
+				"4": false
+			}
+		},
+		{
+			"character": "character-1637353607.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "Yeah, I think I might quit this whole \"mind control\" thing. It's hard to not fall off the edge!"
+		},
+		{
+			"character": "character-1637353698.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "That's fair. Speaking of falling, I'm actually terrified of heights. Could you \"help\" me out and get me to the goal?"
+		}
+	],
+	"metadata": {
+		"dialogic-version": "1.3",
+		"file": "timeline-1637434196.json",
+		"name": "Leve2Intro"
+	}
+}

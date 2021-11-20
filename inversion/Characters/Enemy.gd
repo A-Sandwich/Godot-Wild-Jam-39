@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-signal player_in_fov
+signal person_in_fov
 signal player_out_of_fov
 signal enemy_died
 signal control_enemy
@@ -24,6 +24,7 @@ const LOSE = preload("res://HUD/Lose.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	connect_signals_to_player()
+	connect_signals_to_old_man()
 	connect_to_goal()
 	rng.randomize()
 	direction = pick_random_direction()
@@ -50,9 +51,16 @@ func connect_signals_to_player():
 	if len(player) < 1:
 		print("Failed to get player")
 		return
-	self.connect("player_in_fov", player[0], "_player_in_fov")
+	self.connect("person_in_fov", player[0], "_person_in_fov")
 	self.connect("player_out_of_fov", player[0], "_player_out_of_fov")
 	self.connect("enemy_died", player[0], "_enemy_died")
+
+func connect_signals_to_old_man():
+	var old_man = get_tree().get_nodes_in_group("Old")
+	if len(old_man) < 1:
+		print("Failed to get old man")
+		return
+	self.connect("person_in_fov", old_man[0], "_person_in_fov")
 
 func _physics_process(delta):
 	if not can_move:
@@ -122,11 +130,12 @@ func _control_velocity(velocity):
 func _on_FieldOfView_area_entered(area):
 	if is_under_player_control:
 		return
-	if (area.get_parent().name == "Player"):
+	if (area.name != "FieldOfView" and (area.get_parent().name == "Player" or
+	area.get_parent().name == "OldMan")):
 		var lose = LOSE.instance()
 		add_child(lose)
 		get_tree().paused = true
-		emit_signal("player_in_fov")
+		emit_signal("person_in_fov")
 
 func _on_FieldOfView_area_exited(area):
 	if (area.get_parent().name == "Player"):

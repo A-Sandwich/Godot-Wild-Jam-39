@@ -103,7 +103,7 @@ func _on_FallDetection_body_exited(body):
 		is_falling = true
 		print("Falling")
 
-func _player_in_fov():
+func _person_in_fov():
 	is_seen = true
 	print("I'm seen!")
 

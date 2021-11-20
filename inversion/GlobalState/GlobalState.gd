@@ -1,6 +1,7 @@
 extends Node
 
 var current_level = 0
+var triggered_dialog = []
 
 func _ready():
 	pass
@@ -12,3 +13,9 @@ func load_next_level():
 
 func relaod_level():
 	get_tree().reload_current_scene()
+
+func should_trigger_dialog(dialog_name):
+	if dialog_name in triggered_dialog:
+		return false
+	triggered_dialog.append(dialog_name)
+	return true
