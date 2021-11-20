@@ -8,6 +8,7 @@ var is_seen = false
 var speed = 400 
 var is_falling = false
 var is_using_mind_control = false
+var is_panning = false
 
 var velocity = Vector2.ZERO
 
@@ -31,6 +32,8 @@ func connect_signals_to_old_men():
 		self.connect("control_old_man", old_man, "_control_old_man")
 
 func _physics_process(delta):
+	if is_panning:
+		return
 	process_input()
 	velocity = move_and_slide(velocity)
 
@@ -118,7 +121,8 @@ func _enemy_died():
 
 func pan_to_goal():
 	print("Pan")
-	# todo implement pan
+	is_panning = true
+	$Camera2D.pan_to_point(get_goal_location())
 
 func get_goal_location():
 	var goal = get_tree().get_nodes_in_group("Goal")
@@ -126,3 +130,8 @@ func get_goal_location():
 		print("Failed to connect to goal")
 		return global_position
 	return goal[0].global_position
+
+
+func _on_PanPause_timeout():
+	$Camera2D.global_position = global_position
+	is_panning = false

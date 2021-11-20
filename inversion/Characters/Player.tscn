@@ -1,45 +1,11 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Resources/Sprites/Player/player-down-sheet.png" type="Texture" id=1]
 [ext_resource path="res://Resources/Sprites/Player/player-up-sheet.png" type="Texture" id=2]
 [ext_resource path="res://Resources/Sprites/Player/player-right-sheet.png" type="Texture" id=3]
 [ext_resource path="res://Characters/Player.gd" type="Script" id=4]
 [ext_resource path="res://HUD/PlayerHUD.tscn" type="PackedScene" id=5]
-
-[sub_resource type="AtlasTexture" id=10]
-flags = 4
-atlas = ExtResource( 2 )
-region = Rect2( 0, 0, 176, 256 )
-
-[sub_resource type="AtlasTexture" id=11]
-flags = 4
-atlas = ExtResource( 2 )
-region = Rect2( 176, 0, 176, 256 )
-
-[sub_resource type="AtlasTexture" id=12]
-flags = 4
-atlas = ExtResource( 2 )
-region = Rect2( 352, 0, 176, 256 )
-
-[sub_resource type="AtlasTexture" id=13]
-flags = 4
-atlas = ExtResource( 2 )
-region = Rect2( 528, 0, 176, 256 )
-
-[sub_resource type="AtlasTexture" id=14]
-flags = 4
-atlas = ExtResource( 2 )
-region = Rect2( 704, 0, 176, 256 )
-
-[sub_resource type="AtlasTexture" id=15]
-flags = 4
-atlas = ExtResource( 2 )
-region = Rect2( 880, 0, 176, 256 )
-
-[sub_resource type="AtlasTexture" id=16]
-flags = 4
-atlas = ExtResource( 2 )
-region = Rect2( 1056, 0, 176, 256 )
+[ext_resource path="res://Characters/Camera2D.gd" type="Script" id=6]
 
 [sub_resource type="AtlasTexture" id=3]
 flags = 4
@@ -74,6 +40,41 @@ region = Rect2( 880, 0, 176, 256 )
 [sub_resource type="AtlasTexture" id=9]
 flags = 4
 atlas = ExtResource( 3 )
+region = Rect2( 1056, 0, 176, 256 )
+
+[sub_resource type="AtlasTexture" id=10]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 176, 256 )
+
+[sub_resource type="AtlasTexture" id=11]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 176, 0, 176, 256 )
+
+[sub_resource type="AtlasTexture" id=12]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 352, 0, 176, 256 )
+
+[sub_resource type="AtlasTexture" id=13]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 528, 0, 176, 256 )
+
+[sub_resource type="AtlasTexture" id=14]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 704, 0, 176, 256 )
+
+[sub_resource type="AtlasTexture" id=15]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 880, 0, 176, 256 )
+
+[sub_resource type="AtlasTexture" id=16]
+flags = 4
+atlas = ExtResource( 2 )
 region = Rect2( 1056, 0, 176, 256 )
 
 [sub_resource type="AtlasTexture" id=17]
@@ -113,14 +114,14 @@ region = Rect2( 1056, 0, 176, 256 )
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ) ],
-"loop": true,
-"name": "up",
-"speed": 5.0
-}, {
 "frames": [ SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
 "loop": true,
 "name": "right",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ) ],
+"loop": true,
+"name": "up",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 20 ), SubResource( 21 ), SubResource( 22 ), SubResource( 23 ) ],
@@ -148,6 +149,9 @@ shape = SubResource( 2 )
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 zoom = Vector2( 0.5, 0.5 )
+script = ExtResource( 6 )
+
+[node name="PanPause" type="Timer" parent="Camera2D"]
 
 [node name="FallDetection" type="Area2D" parent="."]
 
@@ -156,4 +160,8 @@ shape = SubResource( 2 )
 
 [node name="PlayerHUD" parent="." instance=ExtResource( 5 )]
 
+[node name="Pan" type="Camera2D" parent="."]
+
+[connection signal="timeout" from="Camera2D/PanPause" to="." method="_on_PanPause_timeout"]
+[connection signal="timeout" from="Camera2D/PanPause" to="Camera2D" method="_on_PanPause_timeout"]
 [connection signal="body_exited" from="FallDetection" to="." method="_on_FallDetection_body_exited"]
