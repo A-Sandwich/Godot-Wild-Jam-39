@@ -31,7 +31,6 @@ func connect_signals_to_enemies():
 	var enemies = get_tree().get_nodes_in_group("Enemy")
 	for enemy in enemies:
 		if enemy != self:
-			print("Connected")
 			self.connect("control_enemy", enemy, "_control_enemy")
 
 
