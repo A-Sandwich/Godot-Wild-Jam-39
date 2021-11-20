@@ -130,10 +130,9 @@ func _on_FieldOfView_area_exited(area):
 		emit_signal("player_out_of_fov")
 
 func _control_enemy(enemy):
-	print(enemy.name)
 	if self != enemy:
 		return
-	print("Under control!")
+	print("Under control")
 	$FieldOfView.visible = false
 	is_under_player_control = true
 	$Camera2D.current = true
@@ -156,6 +155,7 @@ func _on_FallDetection_body_exited(body):
 		z_index = -1
 		$FallTimer.start()
 		emit_signal("enemy_died")
+		$Camera2D.current = false
 	else:
 		direction = direction * -1
 

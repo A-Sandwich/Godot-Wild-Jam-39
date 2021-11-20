@@ -116,6 +116,11 @@ func _control_old_man(old_man):
 	is_using_mind_control = true
 
 func _enemy_died():
+	var enemies = get_tree().get_nodes_in_group("Enemy")
+	for enemy in enemies:
+		if enemy.is_under_player_control and not enemy.is_falling:
+			emit_signal("control_enemy", enemy)
+			return
 	$Camera2D.current = true
 	is_using_mind_control = false
 
