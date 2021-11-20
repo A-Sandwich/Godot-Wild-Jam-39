@@ -3,6 +3,7 @@ extends KinematicBody2D
 signal player_in_fov
 signal player_out_of_fov
 signal enemy_died
+signal control_enemy
 
 export var is_guarding_goal = false
 export var is_stationary = false
@@ -24,6 +25,14 @@ func _ready():
 	connect_to_goal()
 	rng.randomize()
 	direction = pick_random_direction()
+	connect_signals_to_enemies()
+	
+func connect_signals_to_enemies():
+	var enemies = get_tree().get_nodes_in_group("Enemy")
+	for enemy in enemies:
+		if enemy != self:
+			print("Connected")
+			self.connect("control_enemy", enemy, "_control_enemy")
 
 
 func connect_to_goal():
@@ -49,10 +58,29 @@ func _physics_process(delta):
 		velocity = Vector2(0,1) * (speed * 6)
 	if velocity == Vector2.ZERO and not is_under_player_control and not is_stationary:
 		velocity = direction * speed
+	process_input()
 	rotate_towards_direction()
 	choose_proper_animation()
 	move_and_slide(velocity)
 	velocity = Vector2.ZERO
+
+func process_input():
+	if is_under_player_control:
+		if Input.is_action_just_pressed("ui_select"):
+			print("Selecting enemy?")
+			if not select_enemy():
+				print("Can't find")
+			else:
+				print("Found")
+
+func select_enemy():
+	var enemy_found = false
+	var enemies = get_tree().get_nodes_in_group("Enemy")
+	for enemy in enemies:
+		if global_position.distance_to(enemy.global_position) < 50 and enemy != self:
+			emit_signal("control_enemy", enemy)
+			enemy_found = true
+	return enemy_found
 
 func choose_proper_animation():
 	# This code is bad and I feel bad
@@ -102,9 +130,10 @@ func _on_FieldOfView_area_exited(area):
 		emit_signal("player_out_of_fov")
 
 func _control_enemy(enemy):
+	print(enemy.name)
 	if self != enemy:
 		return
-	
+	print("Under control!")
 	$FieldOfView.visible = false
 	is_under_player_control = true
 	$Camera2D.current = true
@@ -117,8 +146,6 @@ func _in_goal(area):
 		var win = WIN.instance()
 		add_child(win)
 		get_tree().paused = true
-		
-	print("Enemy in goooooal", area.name)
 
 func pick_random_direction():
 	return Vector2(rng.randf_range(-1.0, 1.0), rng.randf_range(-1.0, 1.0)).normalized()

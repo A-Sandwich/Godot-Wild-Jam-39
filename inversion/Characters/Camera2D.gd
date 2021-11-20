@@ -13,7 +13,6 @@ func _process(delta):
 	if is_panning:
 		global_position = global_position.move_toward(target, 5)
 	if global_position.distance_to(target) < 10:
-		print("Done")
 		is_panning = false
 		target = Vector2.ZERO
 		$PanPause.start()

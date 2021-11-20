@@ -81,6 +81,18 @@ flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 1056, 0, 176, 256 )
 
+[sub_resource type="AtlasTexture" id=25]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 176, 256 )
+
+[sub_resource type="AtlasTexture" id=26]
+atlas = ExtResource( 6 )
+region = Rect2( 176, 0, 176, 256 )
+
+[sub_resource type="AtlasTexture" id=27]
+atlas = ExtResource( 6 )
+region = Rect2( 352, 0, 176, 256 )
+
 [sub_resource type="AtlasTexture" id=18]
 flags = 4
 atlas = ExtResource( 2 )
@@ -116,18 +128,6 @@ flags = 4
 atlas = ExtResource( 2 )
 region = Rect2( 1056, 0, 176, 256 )
 
-[sub_resource type="AtlasTexture" id=25]
-atlas = ExtResource( 6 )
-region = Rect2( 0, 0, 176, 256 )
-
-[sub_resource type="AtlasTexture" id=26]
-atlas = ExtResource( 6 )
-region = Rect2( 176, 0, 176, 256 )
-
-[sub_resource type="AtlasTexture" id=27]
-atlas = ExtResource( 6 )
-region = Rect2( 352, 0, 176, 256 )
-
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
 "frames": [ SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ) ],
@@ -140,14 +140,14 @@ animations = [ {
 "name": "up",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 18 ), SubResource( 19 ), SubResource( 20 ), SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ) ],
-"loop": true,
-"name": "down",
-"speed": 5.0
-}, {
 "frames": [ SubResource( 25 ), SubResource( 26 ), SubResource( 27 ) ],
 "loop": true,
 "name": "old man",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 18 ), SubResource( 19 ), SubResource( 20 ), SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ) ],
+"loop": true,
+"name": "down",
 "speed": 5.0
 } ]
 
@@ -168,7 +168,6 @@ shape = SubResource( 1 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 2 )
 animation = "old man"
-frame = 1
 playing = true
 
 [node name="FieldOfView" type="Area2D" parent="."]
