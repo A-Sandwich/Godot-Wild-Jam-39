@@ -98,5 +98,7 @@ func _on_FallDetection_body_exited(body):
 
 
 func _on_FallTimer_timeout():
-	get_parent().add_child(LOSE.instance())
+	var lose = LOSE.instance()
+	lose.lablel_text = "You killed the old man . . . try again?"
+	get_parent().add_child(lose)
 	queue_free()

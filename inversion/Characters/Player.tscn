@@ -159,6 +159,7 @@ script = ExtResource( 6 )
 shape = SubResource( 2 )
 
 [node name="PlayerHUD" parent="." instance=ExtResource( 5 )]
+layer = 0
 
 [node name="Pan" type="Camera2D" parent="."]
 

@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://HUD/font.tres" type="DynamicFont" id=1]
+[ext_resource path="res://HUD/Lose.gd" type="Script" id=2]
 
 [node name="Lose" type="CanvasLayer"]
+script = ExtResource( 2 )
 
 [node name="Label" type="Label" parent="."]
 anchor_left = 0.5
@@ -12,7 +14,6 @@ margin_top = 146.0
 margin_right = 362.0
 margin_bottom = 226.0
 custom_fonts/font = ExtResource( 1 )
-text = "You've been seen!"
 __meta__ = {
 "_edit_use_anchors_": false
 }
