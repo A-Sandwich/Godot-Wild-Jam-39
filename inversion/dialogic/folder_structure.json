@@ -44,14 +44,36 @@
 		},
 		"Timelines": {
 			"files": [
-				"timeline-1637353737.json",
-				"timeline-1637357584.json",
-				"timeline-1637362662.json",
-				"timeline-1637362790.json",
-				"timeline-1637382360.json"
+				"timeline-1637362790.json"
 			],
 			"folders": {
+				"Intro": {
+					"files": [
+						"timeline-1637353737.json",
+						"timeline-1637357584.json",
+						"timeline-1637362662.json",
+						"timeline-1637382360.json"
+					],
+					"folders": {
 
+					},
+					"metadata": {
+						"color": null,
+						"folded": true
+					}
+				},
+				"Level1": {
+					"files": [
+						"timeline-1637429766.json"
+					],
+					"folders": {
+
+					},
+					"metadata": {
+						"color": null,
+						"folded": false
+					}
+				}
 			},
 			"metadata": {
 				"color": null,

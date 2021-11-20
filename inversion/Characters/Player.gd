@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 signal control_velocity
 signal control_enemy
+signal enemy_can_move
 signal control_old_man
 
 var is_seen = false
@@ -25,6 +26,7 @@ func connect_signals_to_enemies():
 	for enemy in enemies:
 		self.connect("control_velocity", enemy, "_control_velocity")
 		self.connect("control_enemy", enemy, "_control_enemy")
+		self.connect("enemy_can_move", enemy, "_enemy_can_move")
 
 func connect_signals_to_old_men():
 	var old_men = get_tree().get_nodes_in_group("Old")
@@ -139,3 +141,4 @@ func get_goal_location():
 func _on_PanPause_timeout():
 	$Camera2D.global_position = global_position
 	is_panning = false
+	emit_signal("enemy_can_move")

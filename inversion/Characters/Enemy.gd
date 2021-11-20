@@ -9,6 +9,8 @@ export var is_guarding_goal = false
 export var is_stationary = false
 export var is_old_man = false
 
+var can_move = false
+var can_win = false
 var speed = 100 
 var velocity = Vector2.ZERO
 var is_under_player_control = false
@@ -53,6 +55,8 @@ func connect_signals_to_player():
 	self.connect("enemy_died", player[0], "_enemy_died")
 
 func _physics_process(delta):
+	if not can_move:
+		return
 	if is_falling:
 		velocity = Vector2(0,1) * (speed * 6)
 	if velocity == Vector2.ZERO and not is_under_player_control and not is_stationary:
@@ -137,10 +141,11 @@ func _control_enemy(enemy):
 	$Camera2D.current = true
 
 func _in_goal(area):
-	if (not is_falling and
-		is_under_player_control and 
-		area.name != "FieldOfView" and
-		area.get_parent() == self):
+	if (can_win and
+	not is_falling and
+	is_under_player_control and 
+	area.name != "FieldOfView" and
+	area.get_parent() == self):
 		var win = WIN.instance()
 		add_child(win)
 		get_tree().paused = true
@@ -171,3 +176,6 @@ func _on_DirectionChange_timeout():
 
 func _on_FallTimer_timeout():
 	queue_free()
+
+func _enemy_can_move():
+	can_move = true
