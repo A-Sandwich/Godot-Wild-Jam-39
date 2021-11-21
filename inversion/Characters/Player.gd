@@ -5,6 +5,8 @@ signal control_enemy
 signal enemy_can_move
 signal control_old_man
 
+const WIN = preload("res://HUD/Win.tscn")
+
 var is_seen = false
 var speed = 400 
 var is_falling = false
@@ -18,6 +20,7 @@ func _ready():
 	$AnimatedSprite.play("down")
 	connect_signals_to_enemies()
 	connect_signals_to_old_men()
+	connect_to_goal()
 	self.connect("control_enemy", self, "_control_enemy")
 	self.connect("control_old_man", self, "_control_old_man")
 	
@@ -32,6 +35,13 @@ func connect_signals_to_old_men():
 	var old_men = get_tree().get_nodes_in_group("Old")
 	for old_man in old_men:
 		self.connect("control_old_man", old_man, "_control_old_man")
+
+func connect_to_goal():
+	var goal = get_tree().get_nodes_in_group("Goal")
+	if len(goal) < 1:
+		print("Failed to connect to goal")
+		return
+	goal[0].connect("in_goal", self, "_in_goal")
 
 func _physics_process(delta):
 	if is_panning:
@@ -142,3 +152,12 @@ func _on_PanPause_timeout():
 	$Camera2D.global_position = global_position
 	is_panning = false
 	emit_signal("enemy_can_move")
+
+func _in_goal(area):
+	if (not is_falling and
+	not is_using_mind_control and 
+	area.name != "FieldOfView" and
+	area.get_parent() == self):
+		var win = WIN.instance()
+		add_child(win)
+		get_tree().paused = true
