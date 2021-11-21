@@ -38,7 +38,7 @@ position = Vector2( 378, 160 )
 scale = Vector2( 0.125, 0.125 )
 
 [node name="Enemy2" parent="Enemies" instance=ExtResource( 5 )]
-position = Vector2( 595, 606 )
+position = Vector2( 521, 535 )
 scale = Vector2( 0.125, 0.125 )
 
 [node name="Enemy3" parent="Enemies" instance=ExtResource( 5 )]
@@ -54,7 +54,7 @@ position = Vector2( 132, 235 )
 scale = Vector2( 0.125, 0.125 )
 
 [node name="Enemy6" parent="Enemies" instance=ExtResource( 5 )]
-position = Vector2( 420, 542 )
+position = Vector2( 340, 541 )
 scale = Vector2( 0.125, 0.125 )
 
 [node name="Enemy7" parent="Enemies" instance=ExtResource( 5 )]
@@ -65,10 +65,11 @@ scale = Vector2( 0.125, 0.125 )
 layer = -100
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-margin_left = -2908.0
-margin_top = -1669.0
-margin_right = 4439.0
-margin_bottom = 1754.0
+visible = false
+margin_left = -3032.0
+margin_top = -1682.0
+margin_right = 4315.0
+margin_bottom = 1741.0
 color = Color( 0.34902, 0.898039, 1, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
