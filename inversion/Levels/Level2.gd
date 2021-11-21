@@ -4,6 +4,7 @@ var intro_dialog = "/Level2/Leve2Intro"
 
 func _ready():
 	if not $"/root/GlobalState".should_trigger_dialog(intro_dialog):
+		$Player.can_move = true
 		return
 	get_tree().paused = true
 	var new_dialog = Dialogic.start(intro_dialog)

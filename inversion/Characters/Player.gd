@@ -12,6 +12,8 @@ var speed = 400
 var is_falling = false
 var is_using_mind_control = false
 var is_panning = false
+var can_move = false
+var can_win = false
 
 var velocity = Vector2.ZERO
 
@@ -50,6 +52,8 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity)
 
 func process_input():
+	if not can_move:
+		return
 	velocity = Vector2.ZERO
 	if Input.is_action_pressed("ui_up"):
 		if not is_using_mind_control: $AnimatedSprite.play("up")
@@ -114,6 +118,7 @@ func _on_FallDetection_body_exited(body):
 		print("Falling")
 
 func _person_in_fov():
+	print("Player")
 	is_seen = true
 	print("I'm seen!")
 
@@ -127,14 +132,19 @@ func _control_enemy(enemy):
 func _control_old_man(old_man):
 	is_using_mind_control = true
 
-func _enemy_died():
+func is_currently_controlling_an_enemy():
+	var is_currently_controlling = false
 	var enemies = get_tree().get_nodes_in_group("Enemy")
 	for enemy in enemies:
 		if enemy.is_under_player_control and not enemy.is_falling:
-			emit_signal("control_enemy", enemy)
+			is_currently_controlling = true
+	return is_currently_controlling
+	
+func _enemy_died():
+	if is_currently_controlling_an_enemy():
 			return
 	$Camera2D.current = true
-	is_using_mind_control = false
+	$ControlTransferTimeout.start()
 
 func pan_to_goal():
 	is_panning = true
@@ -152,12 +162,21 @@ func _on_PanPause_timeout():
 	$Camera2D.global_position = global_position
 	is_panning = false
 	emit_signal("enemy_can_move")
+	can_move = true
 
 func _in_goal(area):
-	if (not is_falling and
+	if (can_win and
+	not is_falling and
 	not is_using_mind_control and 
 	area.name != "FieldOfView" and
 	area.get_parent() == self):
 		var win = WIN.instance()
 		add_child(win)
 		get_tree().paused = true
+
+
+func _on_ControlTransferTimeout_timeout():
+	$ControlTransferTimeout.stop()
+	if is_currently_controlling_an_enemy():
+			return
+	is_using_mind_control = false

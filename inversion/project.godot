@@ -51,12 +51,13 @@ _global_script_class_icons={
 [application]
 
 config/name="inversion"
-run/main_scene="res://Levels/Level1.tscn"
+run/main_scene="res://Title/SplashScreen.tscn"
 config/icon="res://Resources/Sprites/Player/player-down-static.png"
 
 [autoload]
 
 GlobalState="*res://GlobalState/GlobalState.gd"
+Music="*res://GlobalState/Music.tscn"
 
 [display]
 

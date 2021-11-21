@@ -131,7 +131,7 @@ animations = [ {
 } ]
 
 [sub_resource type="CapsuleShape2D" id=2]
-radius = 81.0
+radius = 61.0
 height = 92.0
 
 [node name="Player" type="KinematicBody2D" groups=["Player"]]
@@ -141,6 +141,8 @@ script = ExtResource( 4 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
+animation = "down"
+frame = 3
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -163,6 +165,10 @@ layer = 0
 
 [node name="Pan" type="Camera2D" parent="."]
 
+[node name="ControlTransferTimeout" type="Timer" parent="."]
+wait_time = 0.5
+
 [connection signal="timeout" from="Camera2D/PanPause" to="." method="_on_PanPause_timeout"]
 [connection signal="timeout" from="Camera2D/PanPause" to="Camera2D" method="_on_PanPause_timeout"]
 [connection signal="body_exited" from="FallDetection" to="." method="_on_FallDetection_body_exited"]
+[connection signal="timeout" from="ControlTransferTimeout" to="." method="_on_ControlTransferTimeout_timeout"]

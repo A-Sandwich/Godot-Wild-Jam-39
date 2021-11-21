@@ -2,6 +2,8 @@ extends KinematicBody2D
 
 signal in_goal
 signal select_dialog
+signal person_in_fov
+signal player_out_of_fov
 
 const WIN = preload("res://HUD/Win.tscn")
 const LOSE = preload("res://HUD/Lose.tscn")
@@ -15,6 +17,7 @@ var speed = 400
 func _ready():
 	connect_to_goal()
 	connect_to_parent()
+	connect_signals_to_player()
 
 func connect_to_parent():
 	self.connect("select_dialog", get_parent(),"_select_dialog")
@@ -25,6 +28,15 @@ func connect_to_goal():
 		print("Failed to connect to goal")
 		return
 	goal[0].connect("in_goal", self, "_in_goal")
+	
+func connect_signals_to_player():
+	var player = get_tree().get_nodes_in_group("Player")
+	if len(player) < 1:
+		print("Failed to get player")
+		return
+	self.connect("person_in_fov", player[0], "_person_in_fov")
+	self.connect("player_out_of_fov", player[0], "_player_out_of_fov")\
+
 
 func _physics_process(delta):
 	if is_under_player_control:
@@ -64,6 +76,8 @@ func apply_velocity(velocity):
 func _on_FieldOfView_area_entered(area):
 	if not is_under_player_control and area.get_parent().name == "Player":
 		emit_signal("select_dialog", "/I SEE YOU")
+		print("PERSON")
+		emit_signal("person_in_fov")
 		#var new_dialog = Dialogic.start('I SEE YOU')
 		#add_child(new_dialog)
 
@@ -88,7 +102,8 @@ func _in_goal(area):
 
 
 func _on_Explain_timeout():
-	emit_signal("select_dialog" ,"Inversion Detected")
+	if not is_falling:
+		emit_signal("select_dialog" ,"Inversion Detected")
 	$Explain.stop()
 
 func _on_FallDetection_body_exited(body):
@@ -108,4 +123,8 @@ func _on_FallTimer_timeout():
 
 func _person_in_fov():
 	is_seen = true
-	print("I'm seen!")
+
+
+func _on_FieldOfView_area_exited(area):
+	if (area.get_parent().name == "Player"):
+		emit_signal("player_out_of_fov")

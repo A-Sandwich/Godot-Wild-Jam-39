@@ -59,11 +59,11 @@ animations = [ {
 } ]
 
 [sub_resource type="CapsuleShape2D" id=5]
-radius = 79.0
+radius = 58.0
 height = 84.0
 
 [sub_resource type="CapsuleShape2D" id=6]
-radius = 84.0
+radius = 57.0
 height = 90.0
 
 [node name="OldMan" type="KinematicBody2D" groups=["Old"]]
@@ -113,6 +113,7 @@ wait_time = 2.0
 [node name="FallTimer" type="Timer" parent="."]
 
 [connection signal="area_entered" from="FieldOfView" to="." method="_on_FieldOfView_area_entered"]
+[connection signal="area_exited" from="FieldOfView" to="." method="_on_FieldOfView_area_exited"]
 [connection signal="body_exited" from="FallDetection" to="." method="_on_FallDetection_body_exited"]
 [connection signal="timeout" from="Explain" to="." method="_on_Explain_timeout"]
 [connection signal="timeout" from="FallTimer" to="." method="_on_FallTimer_timeout"]
